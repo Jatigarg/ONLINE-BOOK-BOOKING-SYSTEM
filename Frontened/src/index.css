@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*
+{
+    @apply p-0 m-0 box-border 
+}
+
+head,body
+{
+    @apply w-full h-full bg-black
+}
+
+#myname
+{
+    font-family: cursive;
+    color: palevioletred
+}
+#header
+{
+    margin-left: 2.5rem;
+    margin-right: 3.5rem;
+}
+
+@media (max-width:480px) {
+    #header
+    {
+        margin-left: 1.5rem;
+        margin-right: 2.5rem;
+    }
+
+    #spacep
+    {
+        @apply gap-x-3.5
+    }
+
+    #login
+    {
+        @apply px-3 py-0.5
+    }
+}
+
+.height-26rem {
+    height: 28rem;
+  }
+
