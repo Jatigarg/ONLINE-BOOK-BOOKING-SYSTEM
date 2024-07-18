@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Login from '../components/Login';
+import { useAuth } from '../context/AuthProvider';
+import Logout from '../components/Logout';
 
 function Navbar() {
-    
+
+    const [authUser, setauthUser] = useAuth()
     const [ismenuopen, setismenuopen] = useState(false);
     const [sticky, setsticky] = useState(false);
 
@@ -31,9 +34,8 @@ function Navbar() {
 
     return (
         <>
-            <div className={`bg-black fixed top-0 left-0 right-0 z-50 ${
-                sticky ? "sticky-navbar shadow-md bg-base-200 duration-300 transition-all ease-in-out" : ""
-            }`}>
+            <div className={`bg-black fixed top-0 left-0 right-0 z-50 ${sticky ? "sticky-navbar shadow-md bg-base-200 duration-300 transition-all ease-in-out" : ""
+                }`}>
 
                 {/* header */}
 
@@ -82,10 +84,10 @@ function Navbar() {
                         {/* logo */}
 
                         <Link to="/">
-                        <h1 className='hover:cursor-pointer'><span id='myname' className='text-4xl font-bold '>jatin.</span> Book Store</h1>
+                            <h1 className='hover:cursor-pointer'><span id='myname' className='text-4xl font-bold '>jatin.</span> Book Store</h1>
                         </Link>
 
-                        
+
 
                     </div>
 
@@ -99,7 +101,7 @@ function Navbar() {
                             <li className='hover:cursor-pointer hover:text-white'><a href="/">Home</a></li>
                             <li className='hover:cursor-pointer hover:text-white'><a href="/course">Course</a></li>
                             <li className='hover:cursor-pointer hover:text-white'><a href="https://www.linkedin.com/in/jatingupta1234/" target="_blank" rel="noopener noreferrer">Contact</a></li>
-                            <li className='hover:cursor-pointer hover:text-white'>About</li>
+                            <li className='hover:cursor-pointer hover:text-white'><a href="/about">About</a></li>
                         </ul>
 
                         {/* web search bar */}
@@ -123,13 +125,18 @@ function Navbar() {
                         </div>
 
                         {/* button */}
-
-                        <a id='login' className="btn btn-primary px-6 py-4" onClick={
-                            () => {
-                                document.getElementById("my_modal_3").showModal();
-                              }
-                        }>Login</a>
-                        <Login/>
+                        
+                        {
+                            authUser ? <Logout /> :
+                                <div>
+                                    <a id='login' className="btn btn-primary px-6 py-4" onClick={
+                                        () => {
+                                            document.getElementById("my_modal_3").showModal();
+                                        }
+                                    }>Login</a>
+                                    <Login />
+                                </div>
+                        }
 
 
                     </div>
@@ -145,7 +152,7 @@ function Navbar() {
                             <li className='hover:cursor-pointer hover:text-white'><a href="/">Home</a></li>
                             <li className='hover:cursor-pointer hover:text-white'><a href="/course">Course</a></li>
                             <li className='hover:cursor-pointer hover:text-white'><a href="https://www.linkedin.com/in/jatingupta1234/" target="_blank" rel="noopener noreferrer">Contact</a></li>
-                            <li className='hover:cursor-pointer hover:text-white'>About</li>
+                            <li className='hover:cursor-pointer hover:text-white'><a href="/about">About</a></li>
                         </ul>
                     </div>
                 ) : null

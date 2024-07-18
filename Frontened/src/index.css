@@ -46,3 +46,20 @@ head,body
     height: 28rem;
   }
 
+#shine span:hover
+{
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: text-shadow 0.2s ease-in-out;
+}
+
+#shine2 span:hover
+{
+    text-shadow: 4px 7px 10px rgba(255, 255, 255, 0.5);
+    transition: text-shadow 0.2s ease-in-out;
+}
+
+.cursive
+{
+    font-family: cursive;
+}
+

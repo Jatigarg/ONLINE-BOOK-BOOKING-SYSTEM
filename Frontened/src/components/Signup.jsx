@@ -1,11 +1,34 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
+import axios from "axios"
+import toast from 'react-hot-toast';
 
 function Signup() {
 
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const onSubmit = async (data) => {
+        const userInfo = {
+            fullname: data.fullname,
+            email: data.email,
+            password: data.password,
+        }
+        await axios
+        .post("http://localhost:4001/users/signup" , userInfo)
+        .then((res) =>{
+            console.log(res.data)
+            if(res.data)
+            {
+                toast.success('Signup sucessful');
+                navigate("/", { replace: true }); // Redirect to /
+            }
+            localStorage.setItem("Users" , JSON.stringify(res.data.user)) // ---> (name, data) in browser local storage
+        }).catch((err) => {
+            console.log(err)
+            toast.error("Login Error :" + err.response.data.message) // ----> IMP (Show error duting create controller)
+        })
+    }
 
     return (
         <>
@@ -21,24 +44,24 @@ function Signup() {
 
                                 <span>Email</span>
                                 <br />
-                                <input type="Email" placeholder='Enter your email' className='w-80 px-3 py-1 rounded-md outline-none mt-2'{...register("Email", { required: true })} />
+                                <input type="email" placeholder='Enter your email' className='w-80 px-3 py-1 rounded-md outline-none mt-2'{...register("email", { required: true })} />
                                 <br />
-                                {errors.Email && <span className='text-sm text-red-500'>Please fill the email</span>}
+                                {errors.email && <span className='text-sm text-red-500'>Please fill the email</span>}
 
                                 <div className='mt-8'>
-                                    <span>Password</span>
+                                    <span>password</span>
                                     <br />
-                                    <input type="Email" placeholder='Enter your password' className='w-80 px-3 py-1 rounded-md outline-none mt-2' {...register("Password", { required: true })} />
+                                    <input type="password" placeholder='Enter your password' className='w-80 px-3 py-1 rounded-md outline-none mt-2' {...register("password", { required: true })} />
                                     <br />
-                                    {errors.Password && <span className='text-sm text-red-500'>Please fill the password</span>}
+                                    {errors.password && <span className='text-sm text-red-500'>Please fill the password</span>}
                                 </div>
 
                                 <div className='mt-8'>
-                                    <span>Name</span>
+                                    <span>fullname</span>
                                     <br />
-                                    <input type="Email" placeholder='Enter your name' className='w-80 px-3 py-1 rounded-md outline-none mt-2'{...register("Name", { required: true })} />
+                                    <input type="fullname" placeholder='Enter your fullname' className='w-80 px-3 py-1 rounded-md outline-none mt-2'{...register("fullname", { required: true })} />
                                     <br />
-                                    {errors.Name && <span className='text-sm text-red-500'>Please fill the name</span>}
+                                    {errors.fullname && <span className='text-sm text-red-500'>Please fill the fullname</span>}
                                 </div>
 
                                 <div className='mt-8 flex justify-around items-center'>
